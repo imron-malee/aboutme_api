@@ -14,7 +14,14 @@ const firebaseConfig = {
 }
 const app = initializeApp(firebaseConfig)
 const db = getDatabase(app)
-//server.js
+app2.get('/', (req,res) => {
+    res.send('Hello')
+})
+
+app2.get('/api/test/:fullname', (req, res) => {
+    const { fullname } = req.params;
+    res.send(fullname)
+})
 //create
 app2.post('/api/create', (req,res) => {
     const jsonData = req.body;
