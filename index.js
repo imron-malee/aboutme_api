@@ -13,19 +13,17 @@ app2.use(bodyParser.json());
 app2.use(bodyParser.urlencoded({extended: true}))
 var server = app2.listen(3001, console.log('server is running on port 3001'))
 
-// const firebaseConfig = {
-//     databaseURL: "https://learn-bb64f-default-rtdb.asia-southeast1.firebasedatabase.app/"
-// }
 const firebaseConfig = {
-    apiKey: "AIzaSyA6WtTqQsK1PI71EpZuKEe6ZikmKLOaBZ4",
-    authDomain: "learn-bb64f.firebaseapp.com",
-    databaseURL: "https://learn-bb64f-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "learn-bb64f",
-    storageBucket: "learn-bb64f.appspot.com",
-    messagingSenderId: "624387657784",
-    appId: "1:624387657784:web:535daae3e8bab161c416cd",
-    measurementId: "G-G7VLWTED9C"
+    apiKey: process.env.API_KEY,
+    authDomain: process.env.AUTH_DOMAIN,
+    databaseURL: process.env.DATABASE_URL,
+    projectId: process.env.PROJECT_ID,
+    storageBucket: process.env.STORAGE_BUCKET,
+    messagingSenderId: process.env.MESSAGING_SENDER_ID,
+    appId: process.env.APP_ID,
+    measurementId: process.env.MEASUREMENT_ID // Optional, if you have it in your new project
 };
+
 const app = initializeApp(firebaseConfig)
 
 //Authentication
