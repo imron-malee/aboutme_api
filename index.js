@@ -1,5 +1,9 @@
+
 const { initializeApp } = require("firebase/app")
+const { getAuth, signInWithEmailAndPassword } = require("firebase/auth");
 const { getDatabase, set, ref, get, update, remove } = require("firebase/database");
+const dotenv = require("dotenv");
+dotenv.config();
 const express = require('express');
 const bodyParser = require("body-parser");
 const { json } = require("body-parser");
@@ -9,10 +13,38 @@ app2.use(bodyParser.json());
 app2.use(bodyParser.urlencoded({extended: true}))
 var server = app2.listen(3001, console.log('server is running on port 3001'))
 
+// const firebaseConfig = {
+//     databaseURL: "https://learn-bb64f-default-rtdb.asia-southeast1.firebasedatabase.app/"
+// }
 const firebaseConfig = {
-    databaseURL: "https://learn-bb64f-default-rtdb.asia-southeast1.firebasedatabase.app/"
-}
+    apiKey: "AIzaSyA6WtTqQsK1PI71EpZuKEe6ZikmKLOaBZ4",
+    authDomain: "learn-bb64f.firebaseapp.com",
+    databaseURL: "https://learn-bb64f-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "learn-bb64f",
+    storageBucket: "learn-bb64f.appspot.com",
+    messagingSenderId: "624387657784",
+    appId: "1:624387657784:web:535daae3e8bab161c416cd",
+    measurementId: "G-G7VLWTED9C"
+};
 const app = initializeApp(firebaseConfig)
+
+//Authentication
+const auth = getAuth();
+const email = process.env.AUTH_EMAIL;
+const password = process.env.AUTH_PASSWORD
+signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    //console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    //console.log(error)
+});
+
 const db = getDatabase(app)
 app2.get('/', (req,res) => {
     res.send('Hello')
