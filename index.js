@@ -14,7 +14,7 @@ app2.use(bodyParser.json());
 app2.use(bodyParser.urlencoded({extended: true}))
 
 //Allow cors origin
-var allowlist = ['http://localhost:3000', 'https://ronslowlife.github.io']
+var allowlist = ['http://localhost:3000', 'https://ronslowlife.github.io/']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
