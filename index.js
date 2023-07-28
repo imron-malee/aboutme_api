@@ -7,10 +7,25 @@ dotenv.config();
 const express = require('express');
 const bodyParser = require("body-parser");
 const { json } = require("body-parser");
+const cors = require('cors');
 
 var app2 = express()
 app2.use(bodyParser.json());
 app2.use(bodyParser.urlencoded({extended: true}))
+
+//Allow cors origin
+var allowlist = ['http://localhost:3000', 'https://ronslowlife.github.io']
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
+
 var server = app2.listen(3001, console.log('server is running on port 3001'))
 
 const firebaseConfig = {
@@ -48,12 +63,12 @@ app2.get('/', (req,res) => {
     res.send('Hello')
 })
 
-app2.get('/api/test/:fullname', (req, res) => {
+app2.get('/api/test/:fullname', cors(corsOptionsDelegate),(req, res) => {
     const { fullname } = req.params;
     res.send(fullname)
 })
 //create
-app2.post('/api/create', (req,res) => {
+app2.post('/api/create', cors(corsOptionsDelegate), (req,res) => {
     const jsonData = req.body;
     const data2 = {
         date: new Date() + ''
@@ -77,7 +92,7 @@ app2.post('/api/create', (req,res) => {
     }
 })
 
-app2.get('/api/getbyname/:fullname', (req, res) => {
+app2.get('/api/getbyname/:fullname', cors(corsOptionsDelegate),(req, res) => {
     const { fullname } = req.params;
     // return res.status(200).json({
     //     RespCode: 200,
