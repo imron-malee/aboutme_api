@@ -7,10 +7,13 @@ dotenv.config();
 const express = require('express');
 const bodyParser = require("body-parser");
 const { json } = require("body-parser");
+const cors = require('cors');
 
 var app2 = express()
 app2.use(bodyParser.json());
 app2.use(bodyParser.urlencoded({extended: true}))
+// use middleware cors
+app2.use(cors());
 var server = app2.listen(3001, console.log('server is running on port 3001'))
 
 const firebaseConfig = {
