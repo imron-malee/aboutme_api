@@ -14,11 +14,14 @@ app2.use(bodyParser.json());
 app2.use(bodyParser.urlencoded({extended: true}))
 
 //Allow cors origin
-var allowlist = ['http://localhost:3000', 'https://ronslowlife.github.io/']
+var allowlist = ['http://localhost:3000', 'https://imron-malee.github.io']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+    corsOptions = { 
+        origin: true, // reflect (enable) the requested origin in the CORS response
+        credentials:true, //access-control-allow-credentials:true
+    } 
   } else {
     corsOptions = { origin: false } // disable CORS for this request
   }
